@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser"
 
 import { bugService } from "./services/bug.service.js"
 import { loggerService } from "./services/logger.service.js"
+import { pdfService } from "./services/pdf.service.js"
 
 const app = express()
 
@@ -48,6 +49,13 @@ app.get("/api/bug/save", async (req, res) => {
         loggerService.error("Couldn't save bug", err)
         res.status(400).send("Couldn't save bug")
     }
+})
+
+// Download PDF
+app.get("/api/bug/download", async (req, res) => {
+    const bugs = await bugService.query()
+    const pdf = pdfService.buildBugPDFStream(bugs)
+    pdf.pipe(res)
 })
 
 // Read
