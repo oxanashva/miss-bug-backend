@@ -1,0 +1,27 @@
+[
+  {
+    "_id": "4LKMzl",
+    "title": "Notification Banner Fails to Dismiss on Click",
+    "severity": 3
+  },
+  {
+    "title": "Checkbox Not Displayed on Settings Page",
+    "severity": 3,
+    "_id": "LLP02"
+  },
+  {
+    "title": "Login Button Unresponsive After Password Entry",
+    "severity": 2,
+    "_id": "NycFp"
+  },
+  {
+    "title": "Dropdown Menu Overlaps Footer on Mobile View",
+    "severity": 4,
+    "_id": "hUUtj"
+  },
+  {
+    "title": "Search Results Fail to Load on First Attempt",
+    "severity": 2,
+    "_id": "xrqaL"
+  }
+]

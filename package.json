@@ -1,0 +1,25 @@
+{
+  "name": "miss-bug",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --ignore \"./data\" server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oxanashva/miss-bug.git"
+  },
+  "author": "Oxana Shvartsman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oxanashva/miss-bug/issues"
+  },
+  "homepage": "https://github.com/oxanashva/miss-bug#readme",
+  "description": "",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}
