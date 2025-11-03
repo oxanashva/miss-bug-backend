@@ -8,7 +8,7 @@ export const pdfService = {
 function buildBugPDFStream(bugs) {
   const doc = new PDFDocument()
 
-  doc.fontSize(20).text('Bug List', { align: 'center' })
+  doc.fontSize(20).text('Bug Report', { align: 'center' })
   doc.moveDown() // Add some space after the title
 
   bugs.forEach((bug, index) => {

@@ -55,6 +55,9 @@ app.get("/api/bug/save", async (req, res) => {
 app.get("/api/bug/download", async (req, res) => {
     const bugs = await bugService.query()
     const pdf = pdfService.buildBugPDFStream(bugs)
+
+    res.setHeader('Content-Type', 'application/pdf')
+
     pdf.pipe(res)
 })
 
