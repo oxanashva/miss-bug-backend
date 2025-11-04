@@ -7,6 +7,20 @@ import { loggerService } from "./services/logger.service.js"
 import { pdfService } from "./services/pdf.service.js"
 
 const app = express()
+const COOKIE_NAME = 'visitedBugs'
+
+function getVisitedBugs(req) {
+    const visitedBugs = req.cookies[COOKIE_NAME]
+    if (visitedBugs) {
+        try {
+            return JSON.parse(visitedBugs)
+        } catch (err) {
+            console.error('Error parsing visitedBugs cookie:', err)
+            return []
+        }
+    }
+    return []
+}
 
 //* ------------------- Config -------------------
 
@@ -64,6 +78,19 @@ app.get("/api/bug/download", async (req, res) => {
 // Read
 app.get("/api/bug/:bugId", async (req, res) => {
     const { bugId } = req.params
+    let visitedBugs = getVisitedBugs(req)
+    if (!visitedBugs.includes(bugId)) {
+        visitedBugs.push(bugId)
+    }
+
+    console.log(`User visited the following bugs: [${visitedBugs.join(', ')}]`)
+
+    if (visitedBugs.length > 3) {
+        return res.status(401).send("Wait for a bit")
+    }
+
+    res.cookie(COOKIE_NAME, JSON.stringify(visitedBugs), { maxAge: 7000, httpOnly: true })
+
     try {
         const bug = await bugService.getById(bugId)
         res.send(bug)
