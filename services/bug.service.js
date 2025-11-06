@@ -9,11 +9,56 @@ export const bugService = {
 }
 
 const bugs = readJsonFile("./data/bugs.json")
+const PAGE_SIZE = 3
 
-
-async function query(filterBy = {}) {
+async function query(filterBy, sortBy, sortDir) {
+    let bugsToDisplay = bugs
     try {
-        return bugs
+        if (filterBy.title) {
+            const regExp = new RegExp(filterBy.title, "i")
+            bugsToDisplay = bugsToDisplay.filter(bug => regExp.test(bug.title))
+        }
+
+        if (filterBy.severity) {
+            bugsToDisplay = bugsToDisplay.filter(bug => bug.severity >= filterBy.severity)
+        }
+
+        if (filterBy.labels && filterBy.labels.length > 0) {
+            bugsToDisplay = bugsToDisplay.filter(bug => {
+                return bug.labels.some(label => filterBy.labels.includes(label))
+            })
+        }
+
+        if (sortBy === "title") {
+            bugsToDisplay = bugsToDisplay.sort((a, b) => {
+                return a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+            })
+        }
+
+        if (sortBy === "severity") {
+            bugsToDisplay = bugsToDisplay.sort((a, b) => {
+                return a.severity - b.severity
+            }) // asc
+        }
+
+        if (sortBy === "createdAt") {
+            if (sortDir === -1) { // desc
+                bugsToDisplay = bugsToDisplay.sort((a, b) => {
+                    return b.createdAt - a.createdAt
+                })
+            } else { // asc
+                bugsToDisplay = bugsToDisplay.sort((a, b) => {
+                    return a.createdAt - b.createdAt
+                })
+            }
+        }
+
+        if ("pageIdx" in filterBy) {
+            const startIdx = filterBy.pageIdx * PAGE_SIZE
+            bugsToDisplay = bugsToDisplay.slice(startIdx, startIdx + PAGE_SIZE)
+        }
+
+        return bugsToDisplay
     } catch (err) {
         throw err
     }

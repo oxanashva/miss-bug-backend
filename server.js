@@ -39,8 +39,18 @@ app.use(cookieParser())
 
 // Read/List
 app.get("/api/bug", async (req, res) => {
+    const { title, severity, labels, pageIdx, sortBy } = req.query
+    const filterBy = {
+        title,
+        severity: +severity,
+        labels,
+    }
+
+    if (pageIdx) filterBy.pageIdx = +pageIdx
+    const sortDir = req.query.sortDir ? +req.query.sortDir : undefined
+
     try {
-        const bugs = await bugService.query()
+        const bugs = await bugService.query(filterBy, sortBy, sortDir)
         res.send(bugs)
     } catch (err) {
         loggerService.error("Couldn't get bugs", err)
@@ -53,7 +63,9 @@ app.get("/api/bug/save", async (req, res) => {
     const bugToSave = {
         _id: req.query._id,
         title: req.query.title,
-        severity: +req.query.severity
+        severity: +req.query.severity,
+        description: req.query.description,
+        createdAt: +req.query.createdAt
     }
 
     try {
