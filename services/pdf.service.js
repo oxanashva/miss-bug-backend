@@ -11,6 +11,7 @@ function buildBugPDFStream(bugs) {
   doc.fontSize(20).text('Bug Report', { align: 'center' })
   doc.moveDown() // Add some space after the title
 
+  console.log('bugs:', bugs);
   bugs.forEach((bug, index) => {
     if (index > 0) {
       doc.moveDown(0.5) // Smaller space between items
