@@ -25,7 +25,7 @@ async function query(filterBy = {}, sortBy = '', sortDir = 1) {
 
         if (filterBy.labels && filterBy.labels.length > 0) {
             bugsToDisplay = bugsToDisplay.filter(bug => {
-                return bug.labels.some(label => filterBy.labels.includes(label))
+                return bug.labels?.some(label => filterBy.labels.includes(label))
             })
         }
 
