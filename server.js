@@ -25,7 +25,10 @@ app.use(express.static("public"))
 app.set("query parser", "extended")
 
 import { bugRoutes } from './api/bug/bug.routes.js'
-app.use('/api/bug', bugRoutes)
+app.use("/api/bug", bugRoutes)
+
+import { userRoutes } from "./api/user/user.routes.js"
+app.use("/api/user", userRoutes)
 
 const port = 3030
 app.listen(port, () => {
