@@ -4,6 +4,7 @@ import { loggerService } from "../../services/logger.service.js"
 export const userService = {
     query,
     getById,
+    getByUsername,
     remove,
     save
 }
@@ -25,7 +26,17 @@ async function getById(userId) {
         if (!user) throw new Error("Cannot find user")
         return user
     } catch (err) {
-        loggerService.error("Couldn't get user", err)
+        loggerService.error("userService[getById]:", err)
+        throw err
+    }
+}
+
+async function getByUsername(username) {
+    try {
+        const user = users.find(user => user.username === username)
+        return user
+    } catch (err) {
+        loggerService("userService[getByUsername]:", err)
         throw err
     }
 }
@@ -37,6 +48,7 @@ async function remove(userId) {
         users.splice(userIdx, 1)
         await _saveUsersToFile()
     } catch (err) {
+        loggerService.error("userService[remove]", err)
         throw err
     }
 }
@@ -49,12 +61,16 @@ async function save(userToSave) {
             users[userIdx] = userToSave
         } else {
             userToSave._id = makeId()
+            userToSave.score = 10000
+            userToSave.createdAt = Date.now()
+            userToSave.isAdmin = false
+            if (!userToSave.imgUrl) userToSave.imgUr = "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
             users.unshift(userToSave)
         }
         await _saveUsersToFile()
         return userToSave
     } catch (err) {
-        loggerService.error("Couldn't save user", err)
+        loggerService.error("userService[save]:", err)
         throw err
     }
 }

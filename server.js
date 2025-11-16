@@ -30,6 +30,9 @@ app.use("/api/bug", bugRoutes)
 import { userRoutes } from "./api/user/user.routes.js"
 app.use("/api/user", userRoutes)
 
+import { authRoutes } from "./api/auth/auth.routes.js"
+app.use("/api/auth", authRoutes)
+
 const port = 3030
 app.listen(port, () => {
     loggerService.info(`App listening on port http://127.0.0.1:${port}`)
