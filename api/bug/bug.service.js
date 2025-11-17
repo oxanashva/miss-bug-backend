@@ -76,10 +76,14 @@ async function getById(bugId) {
     }
 }
 
-async function remove(bugId) {
+async function remove(bugId, loggedinUser) {
     try {
         const bugIdx = bugs.findIndex(bug => bug._id === bugId)
+
         if (bugIdx < 0) throw new Error("Cannot find bug")
+
+        if (!loggedinUser.isAdmin && loggedinUser._id !== bugs[bugIdx].creator._id) throw ("Not your bug")
+
         bugs.splice(bugIdx, 1)
         await _saveBugsToFile()
     } catch (err) {
@@ -88,18 +92,30 @@ async function remove(bugId) {
     }
 }
 
-async function save(bugToSave) {
+async function save(bugToSave, loggedinUser) {
     try {
         if (bugToSave._id) {
             const bugIdx = bugs.findIndex(bug => bug._id === bugToSave._id)
+
             if (bugIdx < 0) throw new Error("Cannot find bug")
-            bugs[bugIdx] = bugToSave
+
+            if (!loggedinUser.isAdmin && loggedinUser._id !== bugs[bugIdx].creator._id) throw ("Not your bug")
+
+            const updatedBug = { ...bugs[bugIdx], ...bugToSave }
+            bugs.splice(bugIdx, 1, updatedBug)
+            await _saveBugsToFile()
+            return updatedBug
         } else {
             bugToSave._id = makeId()
+            bugToSave.createdAt = Date.now(),
+                bugToSave.creator = {
+                    _id: loggedinUser._id,
+                    fullname: loggedinUser.fullname
+                }
             bugs.unshift(bugToSave)
+            await _saveBugsToFile()
+            return bugToSave
         }
-        await _saveBugsToFile()
-        return bugToSave
     } catch (err) {
         loggerService.error(`Couldn't save bug`, err);
         throw err

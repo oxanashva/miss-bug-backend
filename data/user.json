@@ -5,7 +5,7 @@
     "username": "muki",
     "password": "$2b$10$zGpnPGZtqV2AECs2fw6.ge31rg15fr2Y3gGCeaCkh2aC93cJAW4zG",
     "score": 100,
-    "imgUr": "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
+    "imgUrl": "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
     "isAdmin": true,
     "createdAt": 1763292435342
   },
@@ -15,7 +15,7 @@
     "username": "luki",
     "password": "$2b$10$zGpnPGZtqV2AECs2fw6.ge31rg15fr2Y3gGCeaCkh2aC93cJAW4zG",
     "score": 100,
-    "imgUr": "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
+    "imgUrl": "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
     "isAdmin": false,
     "createdAt": 1763292435342
   },
@@ -25,7 +25,7 @@
     "username": "puki",
     "password": "$2b$10$zGpnPGZtqV2AECs2fw6.ge31rg15fr2Y3gGCeaCkh2aC93cJAW4zG",
     "score": 100,
-    "imgUr": "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
+    "imgUrl": "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
     "isAdmin": false,
     "createdAt": 1763292435342
   }

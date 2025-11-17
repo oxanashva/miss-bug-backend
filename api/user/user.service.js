@@ -64,7 +64,7 @@ async function save(userToSave) {
             userToSave.score = 10000
             userToSave.createdAt = Date.now()
             userToSave.isAdmin = false
-            if (!userToSave.imgUrl) userToSave.imgUr = "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
+            if (!userToSave.imgUrl) userToSave.imgUrl = "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
             users.unshift(userToSave)
         }
         await _saveUsersToFile()

@@ -1,62 +1,77 @@
 [
-  {
-    "_id": "cEnfR",
-    "title": "Notification Banner Fails to Dismiss on Click",
-    "severity": 3,
-    "description": "Clicking the close icon on the notification banner has no effect, leaving it stuck on screen.",
-    "createdAt": 1762174609359,
-    "labels": ["ui-bug", "need-CR"],
-    "creator": {
-      "_id": "u101",
-      "fullname": "Muki Ja"
+    {
+        "_id": "cEnfR",
+        "title": "Notification Banner Fails to Dismiss on Click",
+        "severity": 3,
+        "description": "Clicking the close icon on the notification banner has no effect, leaving it stuck on screen.",
+        "createdAt": 1762174609359,
+        "labels": [
+            "ui-bug",
+            "need-CR"
+        ],
+        "creator": {
+            "_id": "u101",
+            "fullname": "Muki Ja"
+        }
+    },
+    {
+        "_id": "xrqaL",
+        "title": "Search Results Fail to Load on First Attempt",
+        "severity": 2,
+        "description": "Users must refresh or retry to see search results, disrupting the expected flow.",
+        "createdAt": 1762174559359,
+        "labels": [
+            "backend",
+            "critical"
+        ],
+        "creator": {
+            "_id": "u101",
+            "fullname": "Muki Ja"
+        }
+    },
+    {
+        "_id": "hUUtj",
+        "title": "Dropdown Menu Overlaps Footer on Mobile View",
+        "severity": 4,
+        "description": "On smaller screens, the dropdown menu extends beyond its container and overlaps the footer.",
+        "createdAt": 1762174509359,
+        "labels": [
+            "ui-bug",
+            "dev-branch"
+        ],
+        "creator": {
+            "_id": "u101",
+            "fullname": "Muki Ja"
+        }
+    },
+    {
+        "_id": "NycFp",
+        "title": "Login Button Unresponsive After Password Entry",
+        "severity": 2,
+        "description": "After entering a valid password, clicking the login button does not trigger any action.",
+        "createdAt": 1762174459359,
+        "labels": [
+            "critical",
+            "need-CR",
+            "dev-branch"
+        ],
+        "creator": {
+            "_id": "u102",
+            "fullname": "Luki Ja"
+        }
+    },
+    {
+        "_id": "LLP02",
+        "title": "Checkbox Not Displayed on Settings Page",
+        "severity": 3,
+        "description": "The checkbox element is missing from the settings page, affecting user input options.",
+        "createdAt": 1762174409359,
+        "labels": [
+            "ui-bug"
+        ],
+        "creator": {
+            "_id": "u102",
+            "fullname": "Luki Ja"
+        }
     }
-  },
-  {
-    "_id": "xrqaL",
-    "title": "Search Results Fail to Load on First Attempt",
-    "severity": 2,
-    "description": "Users must refresh or retry to see search results, disrupting the expected flow.",
-    "createdAt": 1762174559359,
-    "labels": ["backend", "critical"],
-    "creator": {
-      "_id": "u101",
-      "fullname": "Muki Ja"
-    }
-  },
-  {
-    "_id": "hUUtj",
-    "title": "Dropdown Menu Overlaps Footer on Mobile View",
-    "severity": 4,
-    "description": "On smaller screens, the dropdown menu extends beyond its container and overlaps the footer.",
-    "createdAt": 1762174509359,
-    "labels": ["ui-bug", "dev-branch"],
-    "creator": {
-      "_id": "u101",
-      "fullname": "Muki Ja"
-    }
-  },
-  {
-    "_id": "NycFp",
-    "title": "Login Button Unresponsive After Password Entry",
-    "severity": 2,
-    "description": "After entering a valid password, clicking the login button does not trigger any action.",
-    "createdAt": 1762174459359,
-    "labels": ["critical", "need-CR", "dev-branch"],
-    "creator": {
-      "_id": "u102",
-      "fullname": "Luki Ja"
-    }
-  },
-  {
-    "_id": "LLP02",
-    "title": "Checkbox Not Displayed on Settings Page",
-    "severity": 3,
-    "description": "The checkbox element is missing from the settings page, affecting user input options.",
-    "createdAt": 1762174409359,
-    "labels": ["ui-bug"],
-    "creator": {
-      "_id": "u102",
-      "fullname": "Luki Ja"
-    }
-  }
 ]

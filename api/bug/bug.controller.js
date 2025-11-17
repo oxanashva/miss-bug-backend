@@ -1,6 +1,7 @@
 import { bugService } from "./bug.service.js"
 import { loggerService } from "../../services/logger.service.js"
 import { pdfService } from "../../services/pdf.service.js"
+import { authService } from "../auth/auth.service.js"
 
 const COOKIE_NAME = 'visitedBugs'
 
@@ -68,8 +69,10 @@ export async function getBug(req, res) {
 // Delete
 export async function removeBug(req, res) {
     const { bugId } = req.params
+    const loggedinUser = authService.validateToken(req.cookies.loginToken)
+
     try {
-        await bugService.remove(bugId)
+        await bugService.remove(bugId, loggedinUser)
         res.send("Removed successfully")
     } catch (err) {
         loggerService.error(`Couldn't remove bug ${bugId}`, err)
@@ -79,17 +82,16 @@ export async function removeBug(req, res) {
 
 // Update
 export async function updateBug(req, res) {
-    const { _id, title, severity, description, createdAt } = req.body
+    const { _id, severity, description } = req.body
     const bugToSave = {
         _id,
-        title,
         severity,
         description,
-        createdAt
     }
+    const loggedinUser = authService.validateToken(req.cookies.loginToken)
 
     try {
-        const savedBug = await bugService.save(bugToSave)
+        const savedBug = await bugService.save(bugToSave, loggedinUser)
         res.send(savedBug)
     } catch (err) {
         loggerService.error("Couldn't save bug", err)
@@ -99,17 +101,16 @@ export async function updateBug(req, res) {
 
 // Add
 export async function addBug(req, res) {
-    const { _id, title, severity, description, createdAt } = req.body
+    const { title, severity, description } = req.body
     const bugToSave = {
-        _id,
         title,
         severity,
         description,
-        createdAt
     }
+    const loggedinUser = authService.validateToken(req.cookies.loginToken)
 
     try {
-        const savedBug = await bugService.save(bugToSave)
+        const savedBug = await bugService.save(bugToSave, loggedinUser)
         res.send(savedBug)
     } catch (err) {
         loggerService.error("Couldn't save bug", err)

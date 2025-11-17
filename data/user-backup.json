@@ -3,21 +3,30 @@
     "_id": "u101",
     "fullname": "Muki Ja",
     "username": "muki",
-    "password": "muki1234",
-    "score": 100
+    "password": "$2b$10$zGpnPGZtqV2AECs2fw6.ge31rg15fr2Y3gGCeaCkh2aC93cJAW4zG",
+    "score": 100,
+    "imgUrl": "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
+    "isAdmin": true,
+    "createdAt": 1763292435342
   },
   {
     "_id": "u102",
     "fullname": "Luki Ja",
     "username": "luki",
-    "password": "luki1234",
-    "score": 100
+    "password": "$2b$10$zGpnPGZtqV2AECs2fw6.ge31rg15fr2Y3gGCeaCkh2aC93cJAW4zG",
+    "score": 100,
+    "imgUrl": "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
+    "isAdmin": false,
+    "createdAt": 1763292435342
   },
   {
     "_id": "u103",
     "fullname": "Puki Ja",
     "username": "puki",
-    "password": "puki1234",
-    "score": 100
+    "password": "$2b$10$zGpnPGZtqV2AECs2fw6.ge31rg15fr2Y3gGCeaCkh2aC93cJAW4zG",
+    "score": 100,
+    "imgUrl": "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
+    "isAdmin": false,
+    "createdAt": 1763292435342
   }
 ]
