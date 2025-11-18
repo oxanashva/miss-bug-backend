@@ -4,7 +4,7 @@ import bcrypt from "bcrypt"
 import { userService } from "../user/user.service.js"
 import { loggerService } from "../../services/logger.service.js"
 
-const crypt = new Cryptr(process.env.SECRET_KEY || "SecretKey-Muk-1234")
+const crypt = new Cryptr(process.env.SECRET_KEY)
 
 export const authService = {
     getLoginToken,
