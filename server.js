@@ -1,3 +1,4 @@
+import "dotenv/config"
 import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
@@ -33,7 +34,7 @@ app.use("/api/user", userRoutes)
 import { authRoutes } from "./api/auth/auth.routes.js"
 app.use("/api/auth", authRoutes)
 
-const port = 3030
+const port = process.env.PORT
 app.listen(port, () => {
     loggerService.info(`App listening on port http://127.0.0.1:${port}`)
 })
