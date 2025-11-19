@@ -58,7 +58,10 @@ async function save(userToSave) {
         if (userToSave._id) {
             const userIdx = users.findIndex(user => user._id === userToSave._id)
             if (userIdx < 0) throw new Error("Cannot find user")
-            users[userIdx] = userToSave
+            const updatedUser = { ...users[userIdx], ...userToSave }
+            users.splice(userIdx, 1, updatedUser)
+            await _saveUsersToFile()
+            return updatedUser
         } else {
             userToSave._id = makeId()
             userToSave.score = 10000

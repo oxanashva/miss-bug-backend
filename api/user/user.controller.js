@@ -40,13 +40,11 @@ export async function removeUser(req, res) {
 
 // Update
 export async function updateUser(req, res) {
-    const { _id, fullname, username, password, score } = req.body
+    const { _id, score, isAdmin } = req.body
     const userToSave = {
         _id,
-        fullname,
-        username,
-        password,
-        score
+        score,
+        isAdmin
     }
 
     try {
@@ -60,13 +58,12 @@ export async function updateUser(req, res) {
 
 // Add
 export async function addUser(req, res) {
-    const { _id, fullname, username, password, score } = req.body
+    const { _id, fullname, username, password } = req.body
     const userToSave = {
         _id,
         fullname,
         username,
-        password,
-        score
+        password
     }
 
     try {
