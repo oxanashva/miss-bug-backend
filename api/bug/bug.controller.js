@@ -69,7 +69,7 @@ export async function getBug(req, res) {
 // Delete
 export async function removeBug(req, res) {
     const { bugId } = req.params
-    const loggedinUser = authService.validateToken(req.cookies.loginToken)
+    const loggedinUser = req.loggwedInUser
 
     try {
         await bugService.remove(bugId, loggedinUser)
@@ -88,7 +88,7 @@ export async function updateBug(req, res) {
         severity,
         description,
     }
-    const loggedinUser = authService.validateToken(req.cookies.loginToken)
+    const loggedinUser = req.loggwedInUser
 
     try {
         const savedBug = await bugService.save(bugToSave, loggedinUser)
@@ -107,7 +107,7 @@ export async function addBug(req, res) {
         severity,
         description,
     }
-    const loggedinUser = authService.validateToken(req.cookies.loginToken)
+    const loggedinUser = req.loggwedInUser
 
     try {
         const savedBug = await bugService.save(bugToSave, loggedinUser)
