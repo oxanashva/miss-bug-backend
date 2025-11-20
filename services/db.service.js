@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb"
 
-import { config } from "../config"
+import { config } from "../config/index.js"
 import { loggerService } from "./logger.service.js"
 
 export const dbService = { getCollection }
@@ -9,7 +9,7 @@ var dbConn = null
 
 async function getCollection(collectionName) {
     try {
-        const db = _connect()
+        const db = await _connect()
         const collection = await db.collection(collectionName)
         return collection
     } catch (err) {
