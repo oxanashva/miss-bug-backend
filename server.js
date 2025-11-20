@@ -10,7 +10,7 @@ const app = express()
 //* ------------------- Config -------------------
 
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static("client"))
+    app.use(express.static("public"))
 } else {
     const corsOptions = {
         origin: [
