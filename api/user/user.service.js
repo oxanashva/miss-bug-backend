@@ -12,7 +12,7 @@ export const userService = {
     save
 }
 
-const users = readJsonFile("./data/user.json")
+// const users = readJsonFile("./data/user.json")
 
 async function query(filterBy = {}) {
     const criteria = _buildCriteria(filterBy)

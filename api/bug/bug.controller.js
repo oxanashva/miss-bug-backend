@@ -22,18 +22,18 @@ function getVisitedBugs(req) {
 
 // Read/List
 export async function getBugs(req, res) {
-    const { title, severity, labels, pageIdx, sortBy } = req.query
+    const { title, severity, labels, pageIdx, sortBy, sortDir } = req.query
     const filterBy = {
         title,
         severity: +severity,
         labels,
+        sortBy,
+        sortDir,
+        pageIdx
     }
 
-    if (pageIdx) filterBy.pageIdx = +pageIdx
-    const sortDir = req.query.sortDir ? +req.query.sortDir : undefined
-
     try {
-        const bugs = await bugService.query(filterBy, sortBy, sortDir)
+        const bugs = await bugService.query(filterBy)
         res.send(bugs)
     } catch (err) {
         loggerService.error("Couldn't get bugs", err)

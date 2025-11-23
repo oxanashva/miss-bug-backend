@@ -1,5 +1,6 @@
 import { readJsonFile, writeJsonFile, makeId } from "../../services/utils.js"
 import { loggerService } from "../../services/logger.service.js"
+import { dbService } from "../../services/db.service.js"
 
 export const bugService = {
     query,
@@ -8,57 +9,23 @@ export const bugService = {
     remove,
 }
 
-const bugs = readJsonFile("./data/bugs.json")
+// const bugs = readJsonFile("./data/bugs.json")
 const PAGE_SIZE = 3
 
-async function query(filterBy = {}, sortBy = '', sortDir = 1) {
-    let bugsToDisplay = bugs
+async function query(filterBy = {}) {
     try {
-        if (filterBy.title) {
-            const regExp = new RegExp(filterBy.title, "i")
-            bugsToDisplay = bugsToDisplay.filter(bug => regExp.test(bug.title))
+        const criteria = _buildCriteria(filterBy)
+        const sort = _buildSort(filterBy)
+
+        const collection = await dbService.getCollection("bug")
+        var bugCursor = await collection.find(criteria, { sort })
+        if (filterBy.pageIdx !== undefined) {
+            bugCursor.skip(filterBy.pageIdx * PAGE_SIZE).limit(PAGE_SIZE)
         }
 
-        if (filterBy.severity) {
-            bugsToDisplay = bugsToDisplay.filter(bug => bug.severity >= filterBy.severity)
-        }
+        const bugs = await bugCursor.toArray()
 
-        if (filterBy.labels && filterBy.labels.length > 0) {
-            bugsToDisplay = bugsToDisplay.filter(bug => {
-                return bug.labels?.some(label => filterBy.labels.includes(label))
-            })
-        }
-
-        if (sortBy === "title") {
-            bugsToDisplay = bugsToDisplay.sort((a, b) => {
-                return a.title.toLowerCase().localeCompare(b.title.toLowerCase())
-            })
-        }
-
-        if (sortBy === "severity") {
-            bugsToDisplay = bugsToDisplay.sort((a, b) => {
-                return a.severity - b.severity
-            }) // asc
-        }
-
-        if (sortBy === "createdAt") {
-            if (sortDir === -1) { // desc
-                bugsToDisplay = bugsToDisplay.sort((a, b) => {
-                    return b.createdAt - a.createdAt
-                })
-            } else { // asc
-                bugsToDisplay = bugsToDisplay.sort((a, b) => {
-                    return a.createdAt - b.createdAt
-                })
-            }
-        }
-
-        if ("pageIdx" in filterBy) {
-            const startIdx = filterBy.pageIdx * PAGE_SIZE
-            bugsToDisplay = bugsToDisplay.slice(startIdx, startIdx + PAGE_SIZE)
-        }
-
-        return bugsToDisplay
+        return bugs
     } catch (err) {
         loggerService.error(`Couldn't get bugs`, err)
         throw err
@@ -122,6 +89,31 @@ async function save(bugToSave, loggedinUser) {
     }
 }
 
-function _saveBugsToFile() {
-    return writeJsonFile("./data/bugs.json", bugs)
+// function _saveBugsToFile() {
+//     return writeJsonFile("./data/bugs.json", bugs)
+// }
+
+function _buildCriteria(filterBy) {
+    const criteria = {}
+
+    if (filterBy.title) {
+        criteria.title = { $regex: filterBy.title, $options: "i" }
+    }
+
+    if (filterBy.severity) {
+        criteria.severity = { $gte: filterBy.severity }
+    }
+
+    if (filterBy.labels && filterBy.labels.length > 0) {
+        criteria.labels = { $all: filterBy.labels }
+    }
+
+    return criteria
+}
+
+function _buildSort(filterBy) {
+    if (!filterBy.sortBy) return {}
+    return {
+        [filterBy.sortBy]: filterBy.sortDir
+    }
 }
