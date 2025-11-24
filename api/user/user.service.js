@@ -9,7 +9,9 @@ export const userService = {
     getById,
     getByUsername,
     remove,
-    save
+    // save,
+    add,
+    update
 }
 
 // const users = readJsonFile("./data/user.json")
@@ -68,42 +70,79 @@ async function remove(userId) {
     }
 }
 
-async function save(userToSave) {
-    let savedUser
+async function update(user) {
     try {
-        const collection = await dbService.getCollection("user")
-
-        if (userToSave._id) {
-            const userId = ObjectId.createFromHexString(userToSave._id)
-            const userToUpdate = { ...userToSave }
-            delete userToUpdate._id
-
-            const result = await collection.findOneAndUpdate({ _id: userId }, { $set: userToUpdate }, { returnDocument: "after" })
-
-            if (!result) throw new Error("Cannot find user")
-
-            savedUser = result
-        } else {
-            const newUser = {
-                ...userToSave,
-                score: 10000,
-                isAdmin: false,
-                imgUrl: userToSave.imgUrl || "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
-            }
-
-            const result = await collection.insertOne(newUser)
-            savedUser = { ...newUser, _id: result.insertedId }
-
+        // peek only updatable properties
+        const userToSave = {
+            _id: ObjectId.createFromHexString(user._id), // needed for the returnd obj
+            score: user.score,
+            isAdmin: user.isAdmin
         }
-
-        savedUser.createdAt = savedUser._id.getTimestamp()
-        delete savedUser.password
-        return savedUser
+        const collection = await dbService.getCollection('user')
+        await collection.updateOne({ _id: userToSave._id }, { $set: userToSave })
+        return userToSave
     } catch (err) {
-        loggerService.error("userService[save]:", err)
+        loggerService.error(`cannot update user ${user._id}`, err)
         throw err
     }
 }
+
+async function add(user) {
+    try {
+        // peek only updatable fields!
+        const userToAdd = {
+            fullname: user.fullname,
+            username: user.username,
+            password: user.password,
+            imgUrl: user.imgUrl || "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
+            isAdmin: false,
+            score: 100,
+        }
+        const collection = await dbService.getCollection('user')
+        await collection.insertOne(userToAdd)
+        return userToAdd
+    } catch (err) {
+        loggerService.error('cannot add user', err)
+        throw err
+    }
+}
+
+// async function save(userToSave) {
+//     let savedUser
+//     try {
+//         const collection = await dbService.getCollection("user")
+
+//         if (userToSave._id) {
+//             const userId = ObjectId.createFromHexString(userToSave._id)
+//             const userToUpdate = { ...userToSave }
+//             delete userToUpdate._id
+
+//             const result = await collection.findOneAndUpdate({ _id: userId }, { $set: userToUpdate }, { returnDocument: "after" })
+
+//             if (!result) throw new Error("Cannot find user")
+
+//             savedUser = result
+//         } else {
+//             const newUser = {
+//                 ...userToSave,
+//                 score: 10000,
+//                 isAdmin: false,
+//                 imgUrl: userToSave.imgUrl || "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
+//             }
+
+//             const result = await collection.insertOne(newUser)
+//             savedUser = { ...newUser, _id: result.insertedId }
+
+//         }
+
+//         savedUser.createdAt = savedUser._id.getTimestamp()
+//         delete savedUser.password
+//         return savedUser
+//     } catch (err) {
+//         loggerService.error("userService[save]:", err)
+//         throw err
+//     }
+// }
 
 // function _saveUsersToFile() {
 //     return writeJsonFile("./data/user.json", users)

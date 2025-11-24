@@ -42,23 +42,23 @@ export async function removeUser(req, res) {
     }
 }
 
-// Update
-export async function updateUser(req, res) {
-    const { _id, score, isAdmin } = req.body
-    const userToSave = {
-        _id,
-        score,
-        isAdmin
-    }
+// // Update
+// export async function updateUser(req, res) {
+//     const { _id, score, isAdmin } = req.body
+//     const userToSave = {
+//         _id,
+//         score,
+//         isAdmin
+//     }
 
-    try {
-        const savedUser = await userService.save(userToSave)
-        res.send(savedUser)
-    } catch (err) {
-        loggerService.error("Couldn't save user", err)
-        res.status(400).send("Couldn't save user")
-    }
-}
+//     try {
+//         const savedUser = await userService.save(userToSave)
+//         res.send(savedUser)
+//     } catch (err) {
+//         loggerService.error("Couldn't save user", err)
+//         res.status(400).send("Couldn't save user")
+//     }
+// }
 
 // Add
 export async function addUser(req, res) {
@@ -71,10 +71,21 @@ export async function addUser(req, res) {
     }
 
     try {
-        const savedUser = await userService.save(userToSave)
+        const savedUser = await userService.add(userToSave)
         res.send(savedUser)
     } catch (err) {
         loggerService.error("Couldn't save user", err)
         res.status(400).send("Couldn't save user")
+    }
+}
+
+export async function updateUser(req, res) {
+    try {
+        const user = req.body
+        const savedUser = await userService.update(user)
+        res.send(savedUser)
+    } catch (err) {
+        loggerService.error('Failed to update user', err)
+        res.status(400).send({ err: 'Failed to update user' })
     }
 }
