@@ -74,13 +74,13 @@ async function update(user) {
     try {
         // peek only updatable properties
         const userToSave = {
-            _id: ObjectId.createFromHexString(user._id), // needed for the returnd obj
+            _id: ObjectId.createFromHexString(user._id),
             score: user.score,
             isAdmin: user.isAdmin
         }
         const collection = await dbService.getCollection('user')
         await collection.updateOne({ _id: userToSave._id }, { $set: userToSave })
-        return userToSave
+        return user
     } catch (err) {
         loggerService.error(`cannot update user ${user._id}`, err)
         throw err
